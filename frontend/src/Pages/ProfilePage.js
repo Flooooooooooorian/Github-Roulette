@@ -11,6 +11,7 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
 
   return (
     <div>
+      <a href="javascript:history.back()">Back</a>
       <h1> {username} </h1>
       <img src={user.avatar_url} alt={'Profilepic not found'} />
       <details>
