@@ -9,6 +9,12 @@ import AccordionSummary from '@material-ui/core/AccordionSummary'
 import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import WorkIcon from '@material-ui/icons/Work'
+
 const useStyles = makeStyles(theme => ({
   large: {
     width: theme.spacing(30),
@@ -20,6 +26,12 @@ const useStyles = makeStyles(theme => ({
   },
   repos: {
     marginTop: 20,
+    marginBottom: 20,
+  },
+  listing: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
   },
 }))
 
@@ -60,11 +72,18 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            <ul>
+            <List className={classes.listing}>
               {repos.map(repo => (
-                <li key={repo.id}>{repo.name}</li>
+                <ListItem key={repo.id}>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <WorkIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={repo.name} secondary="" />
+                </ListItem>
               ))}
-            </ul>
+            </List>
           </Typography>
         </AccordionDetails>
       </Accordion>
