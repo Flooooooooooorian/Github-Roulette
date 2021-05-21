@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { Avatar } from '@material-ui/core'
+import { Avatar, IconButton } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 
 const useStyles = makeStyles(theme => ({
   large: {
@@ -12,8 +13,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
+  const history = useHistory()
+
   const { username } = useParams()
   const classes = useStyles()
+
+  const handleGoBack = () => {
+    history.goBack()
+  }
 
   useEffect(() => {
     loadUser(username)
@@ -22,7 +29,9 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
 
   return (
     <Wrapper>
-      <NavLink to="javascript:history.back()">Back</NavLink>
+      <IconButton aria-label="Back" onClick={handleGoBack}>
+        <ArrowBackIosIcon />
+      </IconButton>
       <h1>{username}</h1>
       <Avatar
         alt="Profilepic not found"
