@@ -7,7 +7,7 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
   useEffect(() => {
     loadUser(username)
     loadRepos(username)
-  })
+  }, [])
 
   return (
     <div>
@@ -15,7 +15,11 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
       <img src={user.avatar_url} alt={'Profilepic not found'} />
       <details>
         <summary>Repos</summary>
-        <ul>{}</ul>
+        <ul>
+          {repos.map(repo => (
+            <li key={repo.id}>{repo.name}</li>
+          ))}
+        </ul>
         <p></p>
       </details>
     </div>

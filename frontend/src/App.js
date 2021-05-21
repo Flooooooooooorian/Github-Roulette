@@ -10,7 +10,7 @@ function App() {
   const [profile, setProfile] = useState({})
   const [error, setError] = useState('')
 
-  const { user, loadUser, loadRepos } = GithubUserHook()
+  const { user, repos, loadUser, loadRepos } = GithubUserHook()
 
   useEffect(() => {
     githubApi
@@ -32,7 +32,12 @@ function App() {
     <Router>
       <Switch>
         <Route path={'/users/:username'}>
-          <ProfilePage user={user} loadUser={loadUser} loadRepos={loadRepos} />
+          <ProfilePage
+            user={user}
+            loadUser={loadUser}
+            loadRepos={loadRepos}
+            repos={repos}
+          />
         </Route>
         <Route path={'/home'}>
           <HomePage />
