@@ -3,10 +3,14 @@ import { useEffect, useState } from 'react'
 import githubApi from './service/githubAPI'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HomePage from './Pages/HomePage'
+import Profilpage from './Pages/Profilpage'
+import GithubUserHook from './Hooks/GithubUserHook'
 
 function App() {
   const [profile, setProfile] = useState({})
   const [error, setError] = useState('')
+
+  const { user, getUser } = GithubUserHook()
 
   useEffect(() => {
     githubApi
@@ -27,6 +31,9 @@ function App() {
   return (
     <Router>
       <Switch>
+        <Route path={'/users/:username'}>
+          <Profilpage user={user} getUser={getUser} />
+        </Route>
         <Route path={'/home'}>
           <HomePage />
         </Route>
