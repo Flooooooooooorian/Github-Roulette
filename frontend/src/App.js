@@ -1,6 +1,8 @@
 import styled from 'styled-components/macro'
 import { useEffect, useState } from 'react'
 import githubApi from './service/githubAPI'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import HomePage from './Pages/HomePage'
 
 function App() {
   const [profile, setProfile] = useState({})
@@ -23,10 +25,19 @@ function App() {
   }
 
   return (
-    <Page>
-      <h1>Hallo, {profile.login} 👋🏽</h1>
-      <Avatar src={profile.avatar_url} />
-    </Page>
+    <Router>
+      <Switch>
+        <Route path={'/home'}>
+          <HomePage />
+        </Route>
+        <Route path={'/'}>
+          <Page>
+            <h1>Hallo, {profile.login} 👋🏽</h1>
+            <Avatar src={profile.avatar_url} />
+          </Page>
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 
