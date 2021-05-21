@@ -1,13 +1,24 @@
 import { useEffect } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { Avatar } from '@material-ui/core'
+import { Avatar, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 const useStyles = makeStyles(theme => ({
   large: {
     width: theme.spacing(30),
     height: theme.spacing(30),
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
+  repos: {
+    marginTop: 20,
   },
 }))
 
@@ -29,15 +40,25 @@ export default function ProfilePage({ user, loadUser, repos, loadRepos }) {
         src={user.avatar_url}
         className={classes.large}
       />
-      <details>
-        <summary>Repos</summary>
-        <ul>
-          {repos.map(repo => (
-            <li key={repo.id}>{repo.name}</li>
-          ))}
-        </ul>
-        <p></p>
-      </details>
+
+      <Accordion className={classes.repos}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Repos</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            <ul>
+              {repos.map(repo => (
+                <li key={repo.id}>{repo.name}</li>
+              ))}
+            </ul>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </Wrapper>
   )
 }
