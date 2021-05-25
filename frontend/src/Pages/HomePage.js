@@ -13,16 +13,13 @@ export default function HomePage() {
   const handleInputChange = event => {
     clearTimeout(refTimer.current)
     setUsername(event.target.value)
-    refTimer.current = setTimeout(searchForGithubUsers, 3000)
-  }
-
-  const searchForGithubUsers = () => {
-    console.log(username)
-    instance
-      .get('https://api.github.com/search/users?q=' + username)
-      .then(response => response.data)
-      .then(data => console.log(data))
-      .catch(error => console.error(error.message))
+    refTimer.current = setTimeout(() => {
+      instance
+        .get('https://api.github.com/search/users?q=' + event.target.value)
+        .then(response => response.data)
+        .then(data => console.log(data))
+        .catch(error => console.error(error.message))
+    }, 3000)
   }
 
   const handleButtonClick = event => {
