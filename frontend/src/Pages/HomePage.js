@@ -3,10 +3,12 @@ import { useHistory } from 'react-router-dom'
 import { Button, TextField } from '@material-ui/core'
 import styled from 'styled-components/macro'
 import instance from '../service/githubAPI'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 
 export default function HomePage() {
   const history = useHistory()
   const [username, setUsername] = useState('')
+  const [suggestions, setSuggestions] = useState([])
 
   const refTimer = useRef(0)
 
@@ -17,7 +19,8 @@ export default function HomePage() {
       instance
         .get('https://api.github.com/search/users?q=' + event.target.value)
         .then(response => response.data)
-        .then(data => console.log(data))
+        .then(data => data.items)
+        .then(items => setSuggestions(items))
         .catch(error => console.error(error.message))
     }, 3000)
   }
@@ -28,10 +31,21 @@ export default function HomePage() {
 
   return (
     <Wrapper>
-      <TextField
-        value={username}
-        label="Username"
-        onChange={handleInputChange}
+      <Autocomplete
+        id="usernames-combo-box"
+        freeSolo
+        options={suggestions}
+        getOptionLabel={option => option.login}
+        style={{ width: 300 }}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Username"
+            variant="outlined"
+            value={username}
+            onChange={handleInputChange}
+          />
+        )}
       />
       <Button onClick={handleButtonClick} variant="contained" color="primary">
         Los
@@ -41,6 +55,7 @@ export default function HomePage() {
 }
 const Wrapper = styled.div`
   padding: 20px;
+  display: flex;
 
   button {
     margin-left: 20px;
